@@ -3,5 +3,5 @@ import { ModelAndColorComponent } from './model-and-color/model-and-color.compon
 
 export const routes: Routes = [
     {path: 'step-1', component: ModelAndColorComponent},
-    {path: '**', redirectTo: '/step-1'}
+    {path: '', redirectTo: '/step-1', pathMatch: 'full'}
 ];
