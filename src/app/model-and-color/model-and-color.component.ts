@@ -1,6 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 type Model = {
@@ -16,10 +17,14 @@ type Model = {
 })
 export class ModelAndColorComponent {
 
+  models$ = new Observable();
   constructor(private http: HttpClient) {}
-  models$ = this.http.get<Model[]>('./models').pipe(tap(
+
+  ngOnInit(){
+    this.models$ = this.http.get<Model[]>('http://127.0.0.1:8777/models').pipe(tap(
       value => {
         console.log(value)
       }
     ))
+  }
 }
