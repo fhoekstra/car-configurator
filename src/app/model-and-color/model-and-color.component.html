@@ -1,2 +1,18 @@
-<p>model-and-color works!</p>
-<p>{{ models$ | async }}</p>
+<label for="models">Model:</label>
+<select id="models" [(ngModel)]="SelectedModelCode">
+    <option value="" disabled selected>Choose a model</option>
+    <option *ngFor="let model of availableModels()" 
+    value="{{model.code}}"
+    >{{model.description}}</option>
+</select>
+
+<label for="colors">Color:</label>
+<select id="colors" [(ngModel)]="SelectedColorCode">
+    <option value="" disabled selected>Choose a color</option>
+    <option *ngFor="let color of availableColors()" 
+    value="{{color.code}}"
+    >{{color.description}}</option>
+</select>
+
+<p>Model Code: {{SelectedModelCode}}</p>
+<p>Color Code: {{SelectedColorCode}}</p>
