@@ -10,5 +10,5 @@ import { NavbarComponent } from './navbar/navbar.component';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  name = 'Angular';
+  name = 'Tesla Configurator';
 }
