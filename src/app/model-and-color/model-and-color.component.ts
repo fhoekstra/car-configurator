@@ -4,6 +4,8 @@ import { Component, computed, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ModelService } from '../state/model.service';
+import { ColorService } from '../state/color.service';
 
 type Model = {
   description: string;
@@ -27,6 +29,7 @@ type Color = {
 export class ModelAndColorComponent {
   private _selectedModelCode = signal<string>('');
   private _selectedColorCode = signal<string>('');
+
   showImage = computed(
     () => this._selectedModelCode() && this._selectedColorCode(),
   );
@@ -51,14 +54,18 @@ export class ModelAndColorComponent {
   constructor(
     private http: HttpClient,
     private sanitizer: DomSanitizer,
+    private modelService: ModelService,
+    private colorService: ColorService,
   ) { }
 
   safeImageSource() {
     return this.sanitizer.bypassSecurityTrustUrl(this.imageSource());
   }
+
   set SelectedModelCode(modelCode: string) {
     this._selectedModelCode.set(modelCode);
-    this._selectedColorCode.set('');
+    this.modelService.saveModelCode(modelCode);
+    this.SelectedColorCode = '';
   }
 
   get SelectedModelCode() {
@@ -67,6 +74,7 @@ export class ModelAndColorComponent {
 
   set SelectedColorCode(colorCode: string) {
     this._selectedColorCode.set(colorCode);
+    this.colorService.saveColorCode(colorCode);
   }
 
   get SelectedColorCode() {
