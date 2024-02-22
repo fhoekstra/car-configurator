@@ -58,6 +58,7 @@ export class ModelAndColorComponent {
   }
   set SelectedModelCode(modelCode: string) {
     this._selectedModelCode.set(modelCode);
+    this._selectedColorCode.set('');
   }
 
   get SelectedModelCode() {
