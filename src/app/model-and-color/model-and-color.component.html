@@ -14,5 +14,12 @@
     >{{color.description}}</option>
 </select>
 
-<p>Model Code: {{SelectedModelCode}}</p>
-<p>Color Code: {{SelectedColorCode}}</p>
+<br />
+
+<div *ngIf="showImage; then thenBlock; else elseBlock"></div>
+<ng-template #thenBlock>
+  <img [src]="safeImageSource()" />
+</ng-template>
+<ng-template #elseBlock>
+  <div class="virtualPlaceholder"></div>
+</ng-template>

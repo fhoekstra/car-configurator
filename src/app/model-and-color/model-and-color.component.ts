@@ -1,48 +1,66 @@
-import { AsyncPipe, NgFor } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { tap } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 type Model = {
-  description: string
-  code: string
-  colors: Color[]
-}
+  description: string;
+  code: string;
+  colors: Color[];
+};
 
 type Color = {
-  code: string
-  description: string
-  price: number
-}
+  code: string;
+  description: string;
+  price: number;
+};
 
 @Component({
   selector: 'app-model-and-color',
   standalone: true,
-  imports: [AsyncPipe, NgFor, FormsModule],
+  imports: [AsyncPipe, NgFor, NgIf, FormsModule],
   templateUrl: './model-and-color.component.html',
-  styleUrl: './model-and-color.component.scss'
+  styleUrl: './model-and-color.component.scss',
 })
 export class ModelAndColorComponent {
+  private _selectedModelCode = signal<string>('');
+  private _selectedColorCode = signal<string>('');
+  showImage = computed(
+    () => this._selectedModelCode() && this._selectedColorCode(),
+  );
+  imageSource = computed(() =>
+    this.showImage()
+      ? `https://interstate21.com/tesla-app/images/${this._selectedModelCode()}/${this._selectedColorCode()}.jpg`
+      : '',
+  );
 
-  private _selectedModelCode = signal<string>("");
-  private _selectedColorCode = signal<string>("");
-  availableModels = toSignal(this.http.get<Model[]>('http://127.0.0.1:8777/models'), {initialValue: []});
-  
+  availableModels = toSignal(
+    this.http.get<Model[]>('http://127.0.0.1:8777/models'),
+    { initialValue: [] },
+  );
+
   availableColors = computed(
-    () => this.availableModels()
-    .filter(m => m.code == this._selectedModelCode())[0]
-    ?.colors
-  )
+    () =>
+      this.availableModels().filter(
+        (m) => m.code == this._selectedModelCode(),
+      )[0]?.colors,
+  );
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private sanitizer: DomSanitizer,
+  ) { }
 
+  safeImageSource() {
+    return this.sanitizer.bypassSecurityTrustUrl(this.imageSource());
+  }
   set SelectedModelCode(modelCode: string) {
     this._selectedModelCode.set(modelCode);
   }
 
-  get SelectedModelCode(){
+  get SelectedModelCode() {
     return this._selectedModelCode();
   }
 
@@ -50,7 +68,7 @@ export class ModelAndColorComponent {
     this._selectedColorCode.set(colorCode);
   }
 
-  get SelectedColorCode(){
+  get SelectedColorCode() {
     return this._selectedColorCode();
   }
 }
