@@ -1,25 +1,27 @@
 <label for="models">Model:</label>
 <select id="models" [(ngModel)]="SelectedModelCode">
-    <option value="" disabled selected>Choose a model</option>
-    <option *ngFor="let model of availableModels()" 
-    value="{{model.code}}"
-    >{{model.description}}</option>
+  <option value="" disabled selected>Choose a model</option>
+  <option *ngFor="let model of availableModels()" value="{{ model.code }}">
+    {{ model.description }}
+  </option>
 </select>
 
-<label for="colors">Color:</label>
-<select id="colors" [(ngModel)]="SelectedColorCode">
+<ng-container *ngIf="SelectedModelCode">
+  <label for="colors">Color:</label>
+  <select id="colors" [(ngModel)]="SelectedColorCode">
     <option value="" disabled selected>Choose a color</option>
-    <option *ngFor="let color of availableColors()" 
-    value="{{color.code}}"
-    >{{color.description}}</option>
-</select>
+    <option *ngFor="let color of availableColors()" value="{{ color.code }}">
+      {{ color.description }}
+    </option>
+  </select>
+</ng-container>
 
 <br />
 
-<div *ngIf="showImage; then thenBlock; else elseBlock"></div>
+<div *ngIf="showImage(); then thenBlock; else elseBlock"></div>
 <ng-template #thenBlock>
   <img [src]="safeImageSource()" />
 </ng-template>
 <ng-template #elseBlock>
-  <div class="virtualPlaceholder"></div>
+  <img class="virtualPlaceholder" />
 </ng-template>
