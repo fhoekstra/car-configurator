@@ -1,1 +1,27 @@
-<p>options works!</p>
+<label for="configs">Config:</label>
+<select id="configs" [(ngModel)]="SelectedConfigId">
+  <option value="" disabled selected>Choose a config</option>
+  <option *ngFor="let config of availableConfigs()" value="{{ config.id }}">
+    {{ config.description }}
+  </option>
+</select>
+
+<p *ngIf="SelectedConfigId !== -1" id="details">
+  Range: {{ selectedConfig().range }} miles - Max speed:
+  {{ selectedConfig().speed }} - Cost:
+  {{ selectedConfig().price | currency: "USD" }}
+</p>
+
+<br />
+
+<ng-template [ngIf]="isTowHitchAvailable()">
+  <input type="checkbox" id="towHitch" value="[(isTowHitchSelected)]" />
+  <label for="towHitch">Tow Hitch?</label>
+</ng-template>
+
+<br />
+
+<ng-template [ngIf]="isYokeAvailable()">
+  <input type="checkbox" id="yoke" value="[isYokeSelected)]" />
+  <label for="yoke">Yoke?</label>
+</ng-template>
