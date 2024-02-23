@@ -1,14 +1,14 @@
 <nav class="navbar">
   <ul class="navbar-links">
-    <li><a id="step1" routerLink="/step-1">Step 1</a></li>
-    <li>
+    <li *ngFor="let index of [1, 2, 3]">
       <a
-        id="step2"
-        [ngClass]="canActivateStep2() ? 'clickable' : 'unclickable'"
-        routerLink="/step-2"
-        >Step 2</a
+        [id]="'step' + index"
+        [routerLink]="'/step-' + index"
+        [ngClass]="
+          index == 2 && !canActivateStep2() ? 'unclickable' : 'clickable'
+        "
+        >Step {{ index }}</a
       >
     </li>
-    <li><a id="step3" routerLink="/step-3">Step 3</a></li>
   </ul>
 </nav>
