@@ -1,5 +1,5 @@
-<label for="models">Model:</label>
-<select id="models" [(ngModel)]="SelectedModelCode">
+<label for="modelSelect">Model:</label>
+<select id="modelSelect" [(ngModel)]="SelectedModelCode">
   <option value="" disabled selected>Choose a model</option>
   <option *ngFor="let model of availableModels()" value="{{ model.code }}">
     {{ model.description }}
@@ -7,8 +7,8 @@
 </select>
 
 <ng-container *ngIf="SelectedModelCode">
-  <label for="colors">Color:</label>
-  <select id="colors" [(ngModel)]="SelectedColorCode">
+  <label for="colorSelect">Color:</label>
+  <select id="colorSelect" [(ngModel)]="SelectedColorCode">
     <option value="" disabled selected>Choose a color</option>
     <option *ngFor="let color of availableColors()" value="{{ color.code }}">
       {{ color.description }}
