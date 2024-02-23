@@ -6,8 +6,6 @@ import { FetchModelsService } from '../repositories/fetch-models.service';
 import { OptionsService } from '../state/options.service';
 import { FetchOptionsService } from '../repositories/fetch-options.service';
 import { CurrencyPipe, NgIf } from '@angular/common';
-import { Subscription } from 'rxjs';
-import { Options } from '../types';
 
 @Component({
   selector: 'app-summary',
@@ -25,7 +23,7 @@ export class SummaryComponent {
         .filter((m) => this.selectedModelCode() == m.code)[0],
   );
 
-  private selectedConfigId = toSignal(this.optionsState.configId$);
+  private selectedConfigId = this.optionsState.configId;
   selectedConfig = computed(() => {
     if (this.selectedModelCode())
       return this.availableOptions()?.configs.filter(
@@ -36,14 +34,14 @@ export class SummaryComponent {
     }
   });
 
-  isYokeIncluded = toSignal(this.optionsState.includeYoke$);
-  isTowIncluded = toSignal(this.optionsState.includeTow$);
-  availableOptions = this.fetchOptions.availableOptions;
+  isYokeIncluded = this.optionsState.includeYoke;
+  isTowIncluded = this.optionsState.includeTow;
+  private availableOptions = this.fetchOptions.availableOptions;
 
   constructor(
     private modelState: ModelService,
     private fetchModels: FetchModelsService,
     private optionsState: OptionsService,
     private fetchOptions: FetchOptionsService,
-  ) {}
+  ) { }
 }

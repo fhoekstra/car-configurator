@@ -1,30 +1,27 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OptionsService {
-  private configIdSubject = new BehaviorSubject<number>(-1);
-  public configId$ = this.configIdSubject.asObservable();
+  public configId = signal(-1);
 
-  private includeYokeSubject = new BehaviorSubject<boolean>(false);
-  public includeYoke$ = this.includeYokeSubject.asObservable();
+  public includeYoke = signal(false);
 
-  private includeTowSubject = new BehaviorSubject<boolean>(false);
-  public includeTow$ = this.includeTowSubject.asObservable();
+  public includeTow = signal(false);
 
   constructor() { }
 
   public saveConfigId(code: number) {
-    this.configIdSubject.next(code);
+    this.configId.set(code);
   }
 
   public saveIncludeYoke(included: boolean) {
-    this.includeYokeSubject.next(included);
+    this.includeYoke.set(included);
   }
 
   public saveIncludeTow(included: boolean) {
-    this.includeTowSubject.next(included);
+    this.includeTow.set(included);
   }
 }
