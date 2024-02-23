@@ -18,10 +18,4 @@
 
 <br />
 
-<div *ngIf="showImage(); then thenBlock; else elseBlock"></div>
-<ng-template #thenBlock>
-  <img [src]="safeImageSource()" />
-</ng-template>
-<ng-template #elseBlock>
-  <img class="virtualPlaceholder" />
-</ng-template>
+<app-image> </app-image>

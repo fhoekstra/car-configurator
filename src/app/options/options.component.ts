@@ -4,6 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ModelService } from '../state/model.service';
 import { HttpClient } from '@angular/common/http';
+import { ImageComponent } from '../image/image.component';
 
 type Options = {
   configs: Config[];
@@ -22,7 +23,7 @@ type Config = {
 @Component({
   selector: 'app-options',
   standalone: true,
-  imports: [FormsModule, NgIf, NgFor, CurrencyPipe],
+  imports: [FormsModule, NgIf, NgFor, CurrencyPipe, ImageComponent],
   templateUrl: './options.component.html',
   styleUrl: './options.component.scss',
 })
