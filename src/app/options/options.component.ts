@@ -1,24 +1,11 @@
 import { CurrencyPipe, NgFor, NgIf } from '@angular/common';
 import { Component, computed, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ModelService } from '../state/model.service';
-import { HttpClient } from '@angular/common/http';
 import { ImageComponent } from '../image/image.component';
-
-type Options = {
-  configs: Config[];
-  towHitch: boolean;
-  yoke: boolean;
-};
-
-type Config = {
-  description: string;
-  id: number;
-  price: number;
-  range: number;
-  speed: number;
-};
+import { OptionsService } from '../state/options.service';
+import { FetchOptionsService } from '../repositories/fetch-options.service';
+import { Config } from '../types';
 
 @Component({
   selector: 'app-options',
@@ -32,15 +19,14 @@ export class OptionsComponent {
   private _isTowHitchSelected = signal<boolean>(false);
   private _isYokeSelected = signal<boolean>(false);
 
-  modelCode = toSignal(this.modelState.modelCode$);
-  availableOptions = toSignal(
-    this.http.get<Options>(`http://127.0.0.1:8777/options/${this.modelCode()}`),
-    { initialValue: { configs: [], towHitch: false, yoke: false } },
+  modelCode = this.modelState.modelCode;
+  availableOptions = this.fetchOptions.availableOptions;
+  availableConfigs = computed(() =>
+    this.availableOptions() ? this.availableOptions()?.configs : [],
   );
-  availableConfigs = computed(() => this.availableOptions().configs);
 
   selectedConfig = computed<Config>(() => {
-    const selectedConfig = this.availableConfigs().filter(
+    const selectedConfig = this.availableConfigs()?.filter(
       (c) => c.id == this._selectedConfigId(),
     );
     if (!selectedConfig)
@@ -55,18 +41,19 @@ export class OptionsComponent {
   });
 
   isTowHitchAvailable = computed(() => {
-    console.log(this.availableOptions());
-    return this.availableOptions().towHitch;
+    return this.availableOptions()?.towHitch;
   });
-  isYokeAvailable = computed(() => this.availableOptions().yoke);
+  isYokeAvailable = computed(() => this.availableOptions()?.yoke);
 
   constructor(
-    private http: HttpClient,
+    private fetchOptions: FetchOptionsService,
     private modelState: ModelService,
+    private optionsState: OptionsService,
   ) { }
 
   set SelectedConfigId(configId: number) {
     this._selectedConfigId.set(configId);
+    this.optionsState.saveConfigId(configId);
   }
 
   get SelectedConfigId() {
@@ -75,6 +62,7 @@ export class OptionsComponent {
 
   set IsYokeSelected(selected: boolean) {
     this._isYokeSelected.set(selected);
+    this.optionsState.saveIncludeYoke(selected);
   }
 
   get IsYokeSelected() {
@@ -83,6 +71,7 @@ export class OptionsComponent {
 
   set IsTowHitchSelected(selected: boolean) {
     this._isTowHitchSelected.set(selected);
+    this.optionsState.saveIncludeTow(selected);
   }
 
   get IsTowHitchSelected() {

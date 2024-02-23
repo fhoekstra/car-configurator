@@ -6,18 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ModelService } from '../state/model.service';
 import { ColorService } from '../state/color.service';
 import { ImageComponent } from '../image/image.component';
-
-type Model = {
-  description: string;
-  code: string;
-  colors: Color[];
-};
-
-type Color = {
-  code: string;
-  description: string;
-  price: number;
-};
+import { FetchModelsService } from '../repositories/fetch-models.service';
 
 @Component({
   selector: 'app-model-and-color',
@@ -30,11 +19,7 @@ export class ModelAndColorComponent {
   private _selectedModelCode = signal<string>('');
   private _selectedColorCode = signal<string>('');
 
-  availableModels = toSignal(
-    this.http.get<Model[]>('http://127.0.0.1:8777/models'),
-    { initialValue: [] },
-  );
-
+  availableModels = this.fetchModels.availableModels;
   availableColors = computed(
     () =>
       this.availableModels().filter(
@@ -43,14 +28,14 @@ export class ModelAndColorComponent {
   );
 
   constructor(
-    private http: HttpClient,
-    private modelService: ModelService,
-    private colorService: ColorService,
+    private fetchModels: FetchModelsService,
+    private modelState: ModelService,
+    private colorState: ColorService,
   ) { }
 
   set SelectedModelCode(modelCode: string) {
     this._selectedModelCode.set(modelCode);
-    this.modelService.saveModelCode(modelCode);
+    this.modelState.modelCode.set(modelCode);
     this.SelectedColorCode = '';
   }
 
@@ -60,7 +45,7 @@ export class ModelAndColorComponent {
 
   set SelectedColorCode(colorCode: string) {
     this._selectedColorCode.set(colorCode);
-    this.colorService.saveColorCode(colorCode);
+    this.colorState.saveColorCode(colorCode);
   }
 
   get SelectedColorCode() {

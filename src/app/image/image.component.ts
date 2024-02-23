@@ -13,8 +13,8 @@ import { NgIf } from '@angular/common';
   styleUrl: './image.component.scss',
 })
 export class ImageComponent {
-  selectedModelCode = toSignal(this.modelState.modelCode$);
-  selectedColorCode = toSignal(this.colorState.colorCode$);
+  selectedModelCode = this.modelState.modelCode;
+  selectedColorCode = this.colorState.colorCode;
   showImage = computed(
     () => this.selectedModelCode() && this.selectedColorCode(),
   );

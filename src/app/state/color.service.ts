@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ColorService {
-  private colorCodeSubject = new BehaviorSubject<string>('');
-  public colorCode$ = this.colorCodeSubject.asObservable();
+  public colorCode = signal('');
 
   constructor() { }
 
   public saveColorCode(code: string) {
-    this.colorCodeSubject.next(code);
+    this.colorCode.set(code);
   }
 }

@@ -1,1 +1,19 @@
-<p>summary works!</p>
+<h1>Step 3: Summary</h1>
+<h2>Your {{ selectedModel().description }}</h2>
+
+<p class="grid grid-cols-2">
+  <ng-template [ngIf]="selectedConfig()">
+    <span>{{ selectedConfig()?.description }}</span>
+    <span>{{ selectedConfig()?.price | currency: "USD" }}</span>
+  </ng-template>
+  <ng-template [ngIf]="isYokeIncluded()">
+    <span>Yoke package</span>
+    <span>{{ 1000 | currency: "USD" }}</span>
+  </ng-template>
+  <ng-template [ngIf]="isTowIncluded()">
+    <span>Tow Hitch package</span>
+    <span>{{ 1000 | currency: "USD" }}</span>
+  </ng-template>
+</p>
+
+<app-image> </app-image>
