@@ -1,7 +1,5 @@
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, computed, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ModelService } from '../state/model.service';
 import { ColorService } from '../state/color.service';
