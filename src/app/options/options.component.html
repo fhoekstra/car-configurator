@@ -15,14 +15,14 @@
 <br />
 
 <ng-template [ngIf]="isTowHitchAvailable()">
-  <input type="checkbox" id="includeTow" value="[(isTowHitchSelected)]" />
+  <input type="checkbox" id="includeTow" [(ngModel)]="IsTowHitchSelected" />
   <label for="includeTow">Tow Hitch?</label>
 </ng-template>
 
 <br />
 
 <ng-template [ngIf]="isYokeAvailable()">
-  <input type="checkbox" id="includeYoke" value="[(isYokeSelected)]" />
+  <input type="checkbox" id="includeYoke" [(ngModel)]="IsYokeSelected" />
   <label for="includeYoke">Yoke?</label>
 </ng-template>
 
