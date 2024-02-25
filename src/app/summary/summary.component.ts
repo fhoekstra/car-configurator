@@ -1,6 +1,5 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { ImageComponent } from '../image/image.component';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { ModelService } from '../state/model.service';
 import { FetchModelsService } from '../repositories/fetch-models.service';
 import { OptionsService } from '../state/options.service';
