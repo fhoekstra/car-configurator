@@ -1,7 +1,6 @@
 import { CurrencyPipe, NgFor, NgIf } from '@angular/common';
 import { Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ModelService } from '../state/model.service';
 import { ImageComponent } from '../image/image.component';
 import { OptionsService } from '../state/options.service';
 import { FetchOptionsService } from '../repositories/fetch-options.service';
@@ -19,7 +18,6 @@ export class OptionsComponent {
   private _isTowHitchSelected = signal<boolean>(false);
   private _isYokeSelected = signal<boolean>(false);
 
-  modelCode = this.modelState.modelCode;
   availableOptions = this.fetchOptions.availableOptions;
   availableConfigs = computed(() =>
     this.availableOptions() ? this.availableOptions()?.configs : [],
@@ -47,7 +45,6 @@ export class OptionsComponent {
 
   constructor(
     private fetchOptions: FetchOptionsService,
-    private modelState: ModelService,
     private optionsState: OptionsService,
   ) { }
 
