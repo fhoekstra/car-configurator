@@ -1,7 +1,5 @@
 import { Component, computed } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { ModelService } from '../state/model.service';
-import { ColorService } from '../state/color.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgIf } from '@angular/common';
 
@@ -14,7 +12,7 @@ import { NgIf } from '@angular/common';
 })
 export class ImageComponent {
   selectedModelCode = this.modelState.modelCode;
-  selectedColorCode = this.colorState.colorCode;
+  selectedColorCode = this.modelState.colorCode;
   showImage = computed(
     () => this.selectedModelCode() && this.selectedColorCode(),
   );
@@ -30,7 +28,6 @@ export class ImageComponent {
 
   constructor(
     private modelState: ModelService,
-    private colorState: ColorService,
     private sanitizer: DomSanitizer,
   ) { }
 }

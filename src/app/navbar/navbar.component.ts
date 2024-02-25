@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { canActivateOptions } from '../app.routes';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { NgClass, NgFor } from '@angular/common';
+import { ModelService } from '../state/model.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,5 +11,7 @@ import { NgClass, NgFor } from '@angular/common';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
-  canActivateStep2 = toSignal(canActivateOptions());
+  canActivateStep2 = this.modelService.IsModelAndColorChosen;
+
+  constructor(private modelService: ModelService) { }
 }

@@ -1,8 +1,7 @@
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ModelService } from '../state/model.service';
-import { ColorService } from '../state/color.service';
 import { ImageComponent } from '../image/image.component';
 import { FetchModelsService } from '../repositories/fetch-models.service';
 
@@ -14,8 +13,8 @@ import { FetchModelsService } from '../repositories/fetch-models.service';
   styleUrl: './model-and-color.component.scss',
 })
 export class ModelAndColorComponent {
-  private _selectedModelCode = signal<string>('');
-  private _selectedColorCode = signal<string>('');
+  private _selectedModelCode = this.modelState.modelCode;
+  private _selectedColorCode = this.modelState.colorCode;
 
   availableModels = this.fetchModels.availableModels;
   availableColors = computed(
@@ -28,7 +27,6 @@ export class ModelAndColorComponent {
   constructor(
     private fetchModels: FetchModelsService,
     private modelState: ModelService,
-    private colorState: ColorService,
   ) { }
 
   set SelectedModelCode(modelCode: string) {
@@ -43,7 +41,7 @@ export class ModelAndColorComponent {
 
   set SelectedColorCode(colorCode: string) {
     this._selectedColorCode.set(colorCode);
-    this.colorState.saveColorCode(colorCode);
+    this.modelState.colorCode.set(colorCode);
   }
 
   get SelectedColorCode() {

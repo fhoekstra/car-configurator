@@ -1,18 +1,18 @@
-import { Routes } from '@angular/router';
+import { Router, Routes } from '@angular/router';
 import { ModelAndColorComponent } from './model-and-color/model-and-color.component';
 import { OptionsComponent } from './options/options.component';
 import { SummaryComponent } from './summary/summary.component';
-import { computed, inject } from '@angular/core';
+import { inject } from '@angular/core';
 import { ModelService } from './state/model.service';
-import { ColorService } from './state/color.service';
-import { map } from 'rxjs';
-import { toObservable } from '@angular/core/rxjs-interop';
 
 export const canActivateOptions = () => {
-  const modelCode = inject(ModelService).modelCode;
-  const colorCode = inject(ColorService).colorCode;
-  return toObservable(computed( () => modelCode() && colorCode()))
-}
+  const canActivate = inject(ModelService).IsModelAndColorChosen();
+  if (!canActivate) {
+    const router = inject(Router);
+    router.navigate(['/step-1']);
+  }
+  return canActivate;
+};
 
 export const routes: Routes = [
   { path: 'step-1', component: ModelAndColorComponent },
