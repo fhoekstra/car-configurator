@@ -19,12 +19,12 @@
 
   <ng-template [ngIf]="isYokeIncluded()">
     <span>Yoke steering wheel package</span>
-    <span>{{ 1000 | currency: "USD" }}</span>
+    <span>{{ yokeCost | currency: "USD" }}</span>
   </ng-template>
 
   <ng-template [ngIf]="isTowIncluded()">
     <span>Tow Hitch package</span>
-    <span>{{ 1000 | currency: "USD" }}</span>
+    <span>{{ towCost | currency: "USD" }}</span>
   </ng-template>
 
   <hr />

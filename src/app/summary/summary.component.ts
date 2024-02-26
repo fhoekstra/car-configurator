@@ -5,6 +5,7 @@ import { FetchModelsService } from '../repositories/fetch-models.service';
 import { OptionsService } from '../state/options.service';
 import { FetchOptionsService } from '../repositories/fetch-options.service';
 import { CurrencyPipe, NgIf, UpperCasePipe } from '@angular/common';
+import { PricingService } from '../state/pricing.service';
 
 @Component({
   selector: 'app-summary',
@@ -23,6 +24,7 @@ export class SummaryComponent {
   );
 
   private selectedConfigId = this.optionsState.configId;
+  private availableOptions = this.fetchOptions.availableOptions;
   selectedConfig = computed(() => {
     if (this.selectedModelCode())
       return this.availableOptions()?.configs.filter(
@@ -42,22 +44,24 @@ export class SummaryComponent {
   );
 
   isYokeIncluded = this.optionsState.includeYoke;
+  yokeCost = this.pricingService.yokeCost;
   isTowIncluded = this.optionsState.includeTow;
-  private availableOptions = this.fetchOptions.availableOptions;
+  towCost = this.pricingService.towCost;
 
-  totalCost = computed(() => {
-    let total = 0;
-    if (this.selectedConfig()) total += this.selectedConfig()?.price ?? 0;
-    if (this.selectedColor()) total += this.selectedColor()?.price ?? 0;
-    if (this.isTowIncluded()) total += 1000;
-    if (this.isYokeIncluded()) total += 1000;
-    return total;
-  });
+  totalCost = computed(() =>
+    this.pricingService.totalCost(
+      this.selectedConfig(),
+      this.selectedColor(),
+      this.isTowIncluded(),
+      this.isYokeIncluded(),
+    ),
+  );
 
   constructor(
     private modelState: ModelService,
     private fetchModels: FetchModelsService,
     private optionsState: OptionsService,
     private fetchOptions: FetchOptionsService,
+    private pricingService: PricingService,
   ) { }
 }
