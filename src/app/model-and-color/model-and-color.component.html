@@ -8,7 +8,7 @@
 
 <ng-container *ngIf="SelectedModelCode">
   <label for="colorSelect">Color:</label>
-  <select id="colorSelect" [(ngModel)]="SelectedColorCode">
+  <select id="colorSelect" [(ngModel)]="selectedColorCode">
     <option value="" disabled selected>Choose a color</option>
     <option *ngFor="let color of availableColors()" value="{{ color.code }}">
       {{ color.description }}

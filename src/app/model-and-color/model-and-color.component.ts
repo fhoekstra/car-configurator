@@ -15,7 +15,7 @@ import { OptionsService } from '../state/options.service';
 })
 export class ModelAndColorComponent {
   private _selectedModelCode = this.modelState.modelCode;
-  private _selectedColorCode = this.modelState.colorCode;
+  selectedColorCode = this.modelState.colorCode;
 
   availableModels = this.fetchModels.availableModels;
   availableColors = computed(
@@ -33,21 +33,11 @@ export class ModelAndColorComponent {
 
   set SelectedModelCode(modelCode: string) {
     this._selectedModelCode.set(modelCode);
-    this.modelState.modelCode.set(modelCode);
     this.optionsState.resetOptions();
-    this.SelectedColorCode = '';
+    this.selectedColorCode.set('');
   }
 
   get SelectedModelCode() {
     return this._selectedModelCode();
-  }
-
-  set SelectedColorCode(colorCode: string) {
-    this._selectedColorCode.set(colorCode);
-    this.modelState.colorCode.set(colorCode);
-  }
-
-  get SelectedColorCode() {
-    return this._selectedColorCode();
   }
 }
