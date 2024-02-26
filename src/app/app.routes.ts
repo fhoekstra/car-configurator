@@ -4,8 +4,9 @@ import { OptionsComponent } from './options/options.component';
 import { SummaryComponent } from './summary/summary.component';
 import { inject } from '@angular/core';
 import { ModelService } from './state/model.service';
+import { OptionsService } from './state/options.service';
 
-export const canActivateOptions = () => {
+const canActivateOptions = () => {
   const canActivate = inject(ModelService).IsModelAndColorChosen();
   if (!canActivate) {
     const router = inject(Router);
@@ -14,6 +15,8 @@ export const canActivateOptions = () => {
   return canActivate;
 };
 
+const canActivateSummary = () => inject(OptionsService).isConfigSelected();
+
 export const routes: Routes = [
   { path: 'step-1', component: ModelAndColorComponent },
   {
@@ -21,6 +24,10 @@ export const routes: Routes = [
     component: OptionsComponent,
     canActivate: [canActivateOptions],
   },
-  { path: 'step-3', component: SummaryComponent },
+  {
+    path: 'step-3',
+    component: SummaryComponent,
+    canActivate: [canActivateSummary],
+  },
   { path: '', redirectTo: '/step-1', pathMatch: 'full' },
 ];

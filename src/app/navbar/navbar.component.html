@@ -4,9 +4,7 @@
       <a
         [id]="'step' + index"
         [routerLink]="'/step-' + index"
-        [ngClass]="
-          index == 2 && !canActivateStep2() ? 'unclickable' : 'clickable'
-        "
+        [ngClass]="!canActivateStep(index) ? 'unclickable' : 'clickable'"
         >Step {{ index }}</a
       >
     </li>

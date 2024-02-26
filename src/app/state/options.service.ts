@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, computed, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +17,9 @@ export class OptionsService {
     this.includeYoke.set(false);
     this.includeTow.set(false);
   }
+
+  isConfigSelected = computed(() => this.configId() !== -1);
+
   public saveConfigId(code: number) {
     this.configId.set(code);
   }
