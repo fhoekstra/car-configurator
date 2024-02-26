@@ -5,15 +5,36 @@
   <ng-template [ngIf]="selectedConfig()">
     <span>{{ selectedConfig()?.description }}</span>
     <span>{{ selectedConfig()?.price | currency: "USD" }}</span>
+    <span
+      >Range: {{ selectedConfig()?.range }} miles - Max speed:
+      {{ selectedConfig()?.speed }}</span
+    >
+    <span></span>
   </ng-template>
+
+  <ng-template [ngIf]="selectedColor()">
+    <span>{{ selectedColor().description }}</span>
+    <span>{{ selectedColor().price | currency: "USD" }}</span>
+  </ng-template>
+
   <ng-template [ngIf]="isYokeIncluded()">
     <span>Yoke package</span>
     <span>{{ 1000 | currency: "USD" }}</span>
   </ng-template>
+
   <ng-template [ngIf]="isTowIncluded()">
     <span>Tow Hitch package</span>
     <span>{{ 1000 | currency: "USD" }}</span>
   </ng-template>
+
+  <hr />
+  <span></span>
+  <span>
+    <b>{{ "Total Cost" | uppercase }}</b></span
+  >
+  <span>{{ totalCost() | currency: "USD" }}</span>
+  <hr />
+  <span></span>
 </div>
 
 <app-image> </app-image>
