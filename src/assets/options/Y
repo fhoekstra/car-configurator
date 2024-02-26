@@ -1,0 +1,9 @@
+{
+    "configs": [
+        {"id": 1, "description": "Rear-Wheel Drive", "range": 260, "speed": 135, "price": 43990},
+        {"id": 2, "description": "Long Range - Dual Motor All-Wheel Drive", "range": 330, "speed": 135, "price": 48990},
+        {"id": 3, "description": "Performance - Dual Motor All-Wheel Drive", "range": 303, "speed": 155, "price": 52490}
+    ],
+    "towHitch": true,
+    "yoke": false
+}

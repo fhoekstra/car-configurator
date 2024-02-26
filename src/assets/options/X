@@ -1,0 +1,8 @@
+{
+    "configs": [
+        {"id": 1, "description": "Dual Motor All-Wheel Drive", "range": 348, "speed": 149, "price": 79990},
+        {"id": 2, "description": "Plaid - Tri Motor All-Wheel Drive", "range": 333, "speed": 149, "price": 94990}
+    ],
+    "towHitch": true,
+    "yoke": true
+}

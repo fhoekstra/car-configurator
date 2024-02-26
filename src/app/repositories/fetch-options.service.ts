@@ -11,9 +11,7 @@ import { switchMap } from 'rxjs';
 export class FetchOptionsService {
   availableOptions = toSignal(
     toObservable(this.modelState.modelCode).pipe(
-      switchMap((code) =>
-        this.http.get<Options>(`http://127.0.0.1:8777/options/${code}`),
-      ),
+      switchMap((code) => this.http.get<Options>(`/assets/options/${code}`)),
     ),
   );
 
