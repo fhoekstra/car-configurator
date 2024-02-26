@@ -1,12 +1,12 @@
 <label for="configSelect">Config:</label>
-<select id="configSelect" [(ngModel)]="SelectedConfigId">
+<select id="configSelect" [(ngModel)]="selectedConfigId">
   <option value="" disabled selected>Choose a config</option>
   <option *ngFor="let config of availableConfigs()" value="{{ config.id }}">
     {{ config.description }}
   </option>
 </select>
 
-<p *ngIf="SelectedConfigId !== -1" id="details">
+<p *ngIf="selectedConfigId() !== -1" id="details">
   Range: {{ selectedConfig().range }} miles - Max speed:
   {{ selectedConfig().speed }} - Cost:
   {{ selectedConfig().price | currency: "USD" }}
@@ -15,14 +15,14 @@
 <br />
 
 <ng-template [ngIf]="isTowHitchAvailable()">
-  <input type="checkbox" id="includeTow" [(ngModel)]="IsTowHitchSelected" />
+  <input type="checkbox" id="includeTow" [(ngModel)]="isTowHitchSelected" />
   <label for="includeTow">Tow Hitch?</label>
 </ng-template>
 
 <br />
 
 <ng-template [ngIf]="isYokeAvailable()">
-  <input type="checkbox" id="includeYoke" [(ngModel)]="IsYokeSelected" />
+  <input type="checkbox" id="includeYoke" [(ngModel)]="isYokeSelected" />
   <label for="includeYoke">Yoke?</label>
 </ng-template>
 
