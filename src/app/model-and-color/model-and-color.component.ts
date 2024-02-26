@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ModelService } from '../state/model.service';
 import { ImageComponent } from '../image/image.component';
 import { FetchModelsService } from '../repositories/fetch-models.service';
+import { OptionsService } from '../state/options.service';
 
 @Component({
   selector: 'app-model-and-color',
@@ -27,11 +28,13 @@ export class ModelAndColorComponent {
   constructor(
     private fetchModels: FetchModelsService,
     private modelState: ModelService,
+    private optionsState: OptionsService,
   ) { }
 
   set SelectedModelCode(modelCode: string) {
     this._selectedModelCode.set(modelCode);
     this.modelState.modelCode.set(modelCode);
+    this.optionsState.resetOptions();
     this.SelectedColorCode = '';
   }
 

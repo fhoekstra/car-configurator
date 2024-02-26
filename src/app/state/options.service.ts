@@ -12,6 +12,11 @@ export class OptionsService {
 
   constructor() { }
 
+  public resetOptions() {
+    this.configId.set(-1);
+    this.includeYoke.set(false);
+    this.includeTow.set(false);
+  }
   public saveConfigId(code: number) {
     this.configId.set(code);
   }
