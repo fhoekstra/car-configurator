@@ -7,9 +7,12 @@ import { Model } from '../types';
   providedIn: 'root',
 })
 export class FetchModelsService {
-  availableModels = toSignal(this.http.get<Model[]>('/assets/models'), {
-    initialValue: [],
-  });
+  availableModels = toSignal(
+    this.http.get<Model[]>('/car-configurator/assets/models'),
+    {
+      initialValue: [],
+    },
+  );
 
   constructor(private http: HttpClient) { }
 }
